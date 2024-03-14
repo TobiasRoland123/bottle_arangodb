@@ -9,8 +9,8 @@
       name="{{user['_key'] }}_first_name"
       value="{{user['first_name']}} "
       mix-blur
-      mix-post="/users/update/{{user['_key']}}"
       mix-data="#existing_user"
+      mix-put="user/update/{{user['_key']}}"
     />
     <input value="{{user['last_name']}}" />
   </form>

@@ -16,7 +16,7 @@ def db(query):
     try:
     
         res = requests.post( url, json = query )
-        print(res.json())
+        # print("########################:::::::::::::#", res.json())
         return res.json()
     except Exception as ex:
         print("#"*50)
@@ -41,9 +41,9 @@ def validate_user_name(name):
 
 
 ##############################
-# def update_user(key, type, new_value):
-#     query = f""" FOR user in users FILTER user._key == '{key}'
-#         UPDATE user WITH {{ {type}: '{new_value}' }} IN users
-#         RETURN NEW"""   
-#     res = db({"query": {query}})
-#     return res.json()
+def update_user(key, type, new_value):
+    query = f""" FOR user in users FILTER user._key == '{key}'
+        UPDATE user WITH {{ {type}: '{new_value}' }} IN users
+        RETURN NEW"""   
+    res = db({"query": {query}})
+    return res

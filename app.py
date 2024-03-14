@@ -84,16 +84,17 @@ def _(key):
 ##############################
 #UPDATE USER
     
-@put("/users/update/<key>")
+@put("/user/update/<key>")
 def _(key):
     try:
+        ic(key)
         new_first_name = request.forms.get(f"{key}_first_name")
 
-        # user = x.update_user(key, 'first_name', new_first_name)
+        user = x.db({"query":"""FOR user in users FILTER user._key == '{key}'
+        UPDATE user WITH {{ first_name: '{new_first_name}' }} IN users
+        RETURN NEW"""})
 
-
-
-        print(f"########################################       {new_first_name}         ######################################")
+        print(f"########################################     {user}     ######################################")
     except Exception as ex:
         print("2222222222222222222222", ex)
     finally:
