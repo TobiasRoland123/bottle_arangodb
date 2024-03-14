@@ -1,0 +1,24 @@
+% import x
+<div
+  id="{{user['_key']}}"
+  class="user"
+>
+  <div>{{user["_key"]}}</div>
+  <form id="existing_user">
+    <input
+      name="{{user['_key'] }}_first_name"
+      value="{{user['first_name']}} "
+      mix-blur
+      mix-post="/users/update/{{user['_key']}}"
+      mix-data="#existing_user"
+    />
+    <input value="{{user['last_name']}}" />
+  </form>
+  <button
+    mix-delete="/users/delete/{{user['_key']}}"
+    mix-default="Delete"
+    mix-await="Deleting..."
+  >
+    Delete
+  </button>
+</div>
