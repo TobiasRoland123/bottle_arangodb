@@ -12,7 +12,13 @@
       mix-data="#existing_user"
       mix-put="user/update/{{user['_key']}}"
     />
-    <input value="{{user['last_name']}}" />
+    <input
+      name="{{user['_key'] }}_last_name"
+      value="{{user['last_name']}}"
+      mix-blur
+      mix-data="#existing_user"
+      mix-put="user/update/{{user['_key']}}"
+    />
   </form>
   <button
     mix-delete="/users/delete/{{user['_key']}}"
