@@ -89,14 +89,53 @@ def _(key):
     try:
         ic(key)
         new_first_name = request.forms.get(f"{key}_first_name")
+        new_last_name = request.forms.get(f"{key}_last_name")
 
-        user = x.db({"query":"""FOR user in users FILTER user._key == '{key}'
-        UPDATE user WITH {{ first_name: '{new_first_name}' }} IN users
-        RETURN NEW"""})
+        # print(f"########################################     {new_first_name}     ######################################")
 
-        print(f"########################################     {user}     ######################################")
+        user = x.db({f"query":f"""FOR user IN users FILTER user._key == '159' UPDATE user WITH {{first_name: '{new_first_name}', last_name: '{new_last_name}'}} IN users RETURN NEW"""})
+
+        result = user["result"][0]
+        
+
+
+
+        print(f"########################################     {result}     ######################################")
+
+
+        return f"""
+        <template mix-target="[id='{key}']" mix-replace><div
+  id="{result['_key']}"
+  class="user"
+>
+  <div>{result['_key']}</div>
+  <form id="existing_user">
+    <input
+      name="{result['_key']}_first_name"
+      value="{result['first_name']} "
+      mix-blur
+      mix-data="#existing_user"
+      mix-put="user/update/{result['_key']}"
+    />
+     <input
+      name="{result['_key']}_last_name"
+      value="{result['last_name']}"
+      mix-blur
+      mix-data="#existing_user"
+      mix-put="user/update/{result['_key']}"
+    />
+  </form>
+  <button
+    mix-delete="/users/delete/{result['_key']}"
+    mix-default="Delete"
+    mix-await="Deleting..."
+  >
+    Delete
+  </button>
+</div></template>
+        """
     except Exception as ex:
-        print("2222222222222222222222", ex)
+        print("error  error error error error error", ex)
     finally:
         print("333333333333333333333333")
 
